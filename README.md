@@ -30,7 +30,8 @@ This project simulates how cells turn DNA into proteins through transcription an
    pip install -r requirements.txt
 
 
-## This project was created as part of the course *Basic Programming Skills (Python)* at the Weizmann Institute of Science.
+
+## This project was created as part of the course Basic Programming Skills (Python) at the Weizmann Institute of Science.
 
 
 
