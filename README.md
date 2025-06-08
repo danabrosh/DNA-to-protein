@@ -1,4 +1,4 @@
-# DNA-to-protein-
+# DNA-to-protein
 
 
 Proteins are essential molecules responsible for most of the work inside our cells-support structure, enable biochemical reactions, transport substances, and regulate processes.
@@ -14,14 +14,14 @@ This project simulates how cells turn DNA into proteins through transcription an
 1. **Codon Translation**  
    Converts a 3-letter DNA codon (like `ATG`) into an RNA codon and then translates it into the corresponding amino acid.
 2. **Reading Frames and ORFs**  
-   Analyzes a full DNA sequence (text or FASTA), prints all three reading frames, finds valid open reading frames (from `AUG` to a stop codon),     and translates them. Repeats for the complementary strand.
+   Analyzes a full DNA sequence, prints all three reading frames, finds valid open reading frames (from `AUG` to a stop codon), and translates them. Repeats for the complementary strand.
 3. **Motif Search**
-   Searches the sequence for known or user-defined motifs (`TATA`, `CG`) and reports how many times they appear and their positions.
+   Searches the sequence for known or user-defined motifs (for example,'TATA`, `CG`) and reports how many times they appear and their positions.
 4. **Mutation Simulation**  
-   Introduces random point mutations and shows the mutated sequence with differences.
+   Introduces random point mutations and shows the mutated sequence with differences- can serve as a biological tool for exploring gene variation.
 ## Input:
  DNA sequence as a string or a FASTA file.
-- Depending on the task:
+- Depending on the part:
   - A codon (3 letters)
   - A motif (predefined or custom)
   - Number of mutations to introduce
@@ -37,7 +37,7 @@ This project simulates how cells turn DNA into proteins through transcription an
 
 
 
-This project was created as part of the course Basic Programming Skills (Python) at the Weizmann Institute of Science.
+This project was created as part of [Basic Programming Skills (Python)] (https://github.com/Code-Maven/wis-python-course-2025-03) course at the Weizmann Institute of Science.
 
 
 
