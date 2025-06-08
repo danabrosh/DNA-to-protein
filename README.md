@@ -1,7 +1,16 @@
 # DNA-to-protein-
-## 🔬 What does this project do?
+
+
+Proteins are essential molecules responsible for most of the work inside our cells-support structure, enable biochemical reactions, transport substances, and regulate processes.
+The genetic information that cells use to build new proteins is stored in the DNA.
+To use this information, cells perform two key steps: 
+1. **Transcription** – the DNA is copied into messenger RNA (mRNA).
+2. **Translation** – the mRNA is read in sets of three bases called **codons**, each coding for a specific amino acid.
+   
+## What does this project do? 
 
 This project simulates how cells turn DNA into proteins through transcription and translation. It includes four main parts:
+
 1. **Codon Translation**  
    Converts a 3-letter DNA codon (like `ATG`) into an RNA codon and then translates it into the corresponding amino acid.
 2. **Reading Frames and ORFs**  
@@ -10,15 +19,13 @@ This project simulates how cells turn DNA into proteins through transcription an
    Searches the sequence for known or user-defined motifs (`TATA`, `CG`) and reports how many times they appear and their positions.
 4. **Mutation Simulation**  
    Introduces random point mutations and shows the mutated sequence with differences.
-
-   ## 📥 Input and Output
-### Input:
+## Input:
  DNA sequence as a string or a FASTA file.
 - Depending on the task:
   - A codon (3 letters)
   - A motif (predefined or custom)
   - Number of mutations to introduce
-### Output:
+## Output:
 - RNA codons and amino acids  
 - Reading frames and translated proteins  
 - Motif counts and positions  
@@ -26,12 +33,11 @@ This project simulates how cells turn DNA into proteins through transcription an
   
 ## ⚙️ How to Use
    git clone https://github.com/danabrosh/dna-to-protein.git  
-   cd dna-to-protein
    pip install -r requirements.txt
 
 
 
-### This project was created as part of the course Basic Programming Skills (Python) at the Weizmann Institute of Science.
+This project was created as part of the course Basic Programming Skills (Python) at the Weizmann Institute of Science.
 
 
 
