@@ -35,6 +35,8 @@ This project simulates how cells turn DNA into proteins through transcription an
   
 ## ⚙️ How to Use
   * This project is written in Python 3.
+
+    Run the following commands in your terminal:
    
    git clone https://github.com/danabrosh/dna-to-protein.git
    
