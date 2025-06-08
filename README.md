@@ -21,6 +21,7 @@ This project simulates how cells turn DNA into proteins through transcription an
    Introduces random point mutations and shows the mutated sequence with differences- can serve as a biological tool for exploring gene variation.
 ## Input:
  DNA sequence as a string or a FASTA file.
+ • The user will be asked to choose which function to run (Codon Translation, Reading Frames, Motif Search, or Mutation Simulation).  
 - Depending on the part:
   - A codon (3 letters)
   - A motif (predefined or custom)
@@ -32,8 +33,13 @@ This project simulates how cells turn DNA into proteins through transcription an
 - Mutated DNA with listed base changes
   
 ## ⚙️ How to Use
-   git clone https://github.com/danabrosh/dna-to-protein.git  
+  * This project is written in Python 3.
+   
+   git clone https://github.com/danabrosh/dna-to-protein.git
+   cd dna-to-protein
    pip install -r requirements.txt
+   python main.py
+
 
 ---
 
