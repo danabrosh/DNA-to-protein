@@ -37,7 +37,7 @@ This project simulates how cells turn DNA into proteins through transcription an
 
 
 
-This project was created as part of [Basic Programming Skills (Python)] (https://github.com/Code-Maven/wis-python-course-2025-03) course at the Weizmann Institute of Science.
+This project was created as part of [Basic Programming Skills (Python)](https://github.com/Code-Maven/wis-python-course-2025-03) course at the Weizmann Institute of Science.
 
 
 
