@@ -12,11 +12,11 @@ To use this information, cells perform two key steps:
 This project simulates how cells turn DNA into proteins through transcription and translation. It includes four main parts:
 
 1. **Codon Translation**  
-   Converts a 3-letter DNA codon (like `ATG`) into an RNA codon and then translates it into the corresponding amino acid.
+   Converts a 3-letter DNA codon (like ATG) into an RNA codon and then translates it into the corresponding amino acid.
 2. **Reading Frames and ORFs**  
    Analyzes a full DNA sequence, prints all three reading frames, finds valid open reading frames (from `AUG` to a stop codon), and translates them. Repeats for the complementary strand.
 3. **Motif Search**
-   Searches the sequence for known or user-defined motifs (for example,'TATA`, `CG`) and reports how many times they appear and their positions.
+   Searches the sequence for known or user-defined motifs (for example,TATA, CG) and reports how many times they appear and their positions.
 4. **Mutation Simulation**  
    Introduces random point mutations and shows the mutated sequence with differences- can serve as a biological tool for exploring gene variation.
 ## Input:
@@ -38,13 +38,13 @@ This project simulates how cells turn DNA into proteins through transcription an
 
     Run the following commands in your terminal:
    
-   git clone https://github.com/danabrosh/dna-to-protein.git
+   'git clone https://github.com/danabrosh/dna-to-protein.git
    
    cd dna-to-protein
    
    pip install -r requirements.txt
    
-   python main.py
+   python main.py'
 
 
 ---
