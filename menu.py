@@ -1,14 +1,11 @@
-try:
-    from dna_functions import (
+from dna_functions import (
         codon_translation,
         reading_frames,
         motif_search,
         mutation_simulation,
         get_dna_sequence
     )
-except ImportError as e:
-    print(f"Error importing functions: {e}")
-    exit(1)
+
 
 def main():
     print("Welcome to DNA to Protein!")

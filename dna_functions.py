@@ -59,7 +59,7 @@ def get_dna_sequence():
         print("Invalid choice. Please enter 1 or 2.")
         return None
 
-#codon translation function
+#Codon translation function
 def codon_translation(dna_seq):  # Added parameter
     if dna_seq is None or dna_seq == "":
         print("No DNA sequence provided.")
@@ -80,16 +80,72 @@ def codon_translation(dna_seq):  # Added parameter
         elif base == 'G':
             mRNA_codon += 'C'
         else:
-            mRNA_codon += 'N'  # invalid base
+            mRNA_codon += 'N'  # Invalid base
 
     print(f"\nmRNA codon: {mRNA_codon}")
 
-    # amino acid translation
+    # Amino acid translation
     amino_acid = codon_table.get(mRNA_codon, "Unknown")
     print(f"{mRNA_codon} → {amino_acid}")
 
+#Reading frames function
 def reading_frames():
-    pass  # You'll implement this function later
+    dna_seq = get_dna_sequence()  # Get the DNA sequence from the user
+
+    # Check if the sequence is valid
+    if dna_seq is None or dna_seq == "":
+        print("No DNA sequence provided.")
+        return
+    if len(dna_seq) < 3:
+        print("Please enter a DNA sequence with at least 3 nucleotides.")
+        return
+
+    # Dictionaries for conversion
+    dna_complement = {'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C'}
+    dna_to_mrna_bases = {'A': 'U', 'T': 'A', 'C': 'G', 'G': 'C'}
+
+    # Forward and reverse strands
+    strands = {
+        "Forward": dna_seq,
+        "Reverse": "".join(dna_complement.get(base, 'N') for base in reversed(dna_seq))
+    }
+
+    # For each strand
+    for strand_name, strand_seq in strands.items():
+        # Convert DNA to mRNA
+        mrna_seq = "".join(dna_to_mrna_bases.get(base, 'N') for base in strand_seq)
+
+        print(f"\n{strand_name} strand reading frames:")
+
+        # For each of the 3 reading frames
+        for frame in range(3):
+            print(f"\nFrame {frame + 1}:")
+            i = frame
+            found_orf = False
+            in_orf = False
+            while i + 3 <= len(mrna_seq):
+                codon = mrna_seq[i:i+3]
+                amino_acid = codon_table.get(codon, 'X')
+
+                if codon == 'AUG':
+                    in_orf = True
+                    print(f"{codon} → {amino_acid}")
+                elif in_orf:
+                    print(f"{codon} → {amino_acid}")
+                    if amino_acid == 'STOP':
+                        found_orf = True
+                        break
+                i += 3
+
+            if not found_orf:
+                print("No open reading frame")
+
+
+
+
+
+
+
 
 def motif_search():
     pass  # You'll implement this function later
