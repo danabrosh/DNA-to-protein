@@ -141,14 +141,58 @@ def reading_frames():
                 print("No open reading frame")
 
 
-
-
-
-
-
-
+# Motif search function
 def motif_search():
-    pass  # You'll implement this function later
+    dna_seq = get_dna_sequence()  # Get the DNA sequence from the user
+
+    if dna_seq is None or dna_seq == "":
+        print("No DNA sequence provided.")
+        return
+
+    print("\nMotif Search:")  # The user can search for a known motif or enter a custom one
+    print("1. Search for a known motif (e.g., TATA, CG)")
+    print("2. Enter your own custom motif")
+    choice = input("Enter 1 or 2: ").strip()
+
+    motif_lst = {
+        "1": ("TATA", "Promoter box"),
+        "2": ("CG", "CpG site"),
+        "3": ("AATAAA", "Polyadenylation signal"),
+        "4": ("CAG", "Repeat motif"),
+        "5": ("TTAGGG", "Telomere repeat")}
+
+    if choice == '1':  # Choose from the motif list
+        print("\nSelect one of the following motifs to search for:")
+        for num, (motif, description) in motif_lst.items():
+            print(f"{num}. {motif} ({description})")
+        selected = input("Enter the number of the motif you want to search for: ").strip()
+        if selected in motif_lst:
+            motif = motif_lst[selected][0]
+        else:
+            print("Invalid selection.")
+            return
+    elif choice == '2':  # Custom motif
+        motif = input("Enter the motif you want to search for: ").strip().upper()
+        if motif == "":
+            print("No motif entered.")
+            return
+    else:
+        print("Invalid choice.")
+        return
+
+    # Search and display results from the DNA sequence
+    count = dna_seq.count(motif)
+    positions = [i for i in range(len(dna_seq)) if dna_seq.startswith(motif, i)]
+    print(f"\nMotif '{motif}':")
+    print(f"Found {count} time(s) at positions: {positions if positions else 'None'}")
+
+
+
+
+
+    
+
+
 
 def mutation_simulation():
     pass  # You'll implement this function later
