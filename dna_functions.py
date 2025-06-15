@@ -1,4 +1,5 @@
 #rna to amino acid translation
+import random
 codon_table = {
     'UUU': 'Phenylalanine', 'UUC': 'Phenylalanine',
     'UUA': 'Leucine', 'UUG': 'Leucine',
@@ -186,13 +187,36 @@ def motif_search():
     print(f"\nMotif '{motif}':")
     print(f"Found {count} time(s) at positions: {positions if positions else 'None'}")
 
-
-
-
-
-    
-
-
-
+# Mutation simulation function 
 def mutation_simulation():
-    pass  # You'll implement this function later
+    dna_seq = get_dna_sequence()  # Get DNA from user
+    
+    if dna_seq is None or dna_seq == "":
+        print("No DNA sequence provided.")
+        return
+    
+    num_mutations = int(num_mutations) # Get number of mutations from user
+    if num_mutations < 1 or num_mutations > len(dna_seq):
+        print("Invalid number of mutations.") #For invalid input
+        return
+    dna_bases = ['A', 'T', 'C', 'G']
+dna_list = list(dna_seq)  # Convert DNA sequence to a list for mutations
+mutations = []  # mutations list
+positions = random.sample(range(len(dna_seq)), num_mutations)
+for pos in positions:
+    original_base = dna_list[pos]
+    new_base = random.choice([b for b in dna_bases if b != original_base])
+    dna_list[pos] = new_base
+    mutations.append((pos, original_base, new_base))
+    mutated_seq = ''.join(dna_list)
+
+    # הדפסת תוצאות
+    print("\nOriginal DNA sequence:")
+    print(dna_seq)
+    print("\nMutated DNA sequence:")
+    print(mutated_seq)
+
+    print("\nMutations introduced:")
+    for pos, orig, new in mutations:
+        print(f"Position {pos + 1}: {orig} → {new}")
+
