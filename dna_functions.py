@@ -1,5 +1,5 @@
-#rna to amino acid translation
-import random
+import random #imoort needed for mutation simulation
+#rna to amino acid translation dictionary
 codon_table = {
     'UUU': 'Phenylalanine', 'UUC': 'Phenylalanine',
     'UUA': 'Leucine', 'UUG': 'Leucine',
@@ -190,31 +190,33 @@ def motif_search():
 # Mutation simulation function 
 def mutation_simulation():
     dna_seq = get_dna_sequence()  # Get DNA from user
-    
     if dna_seq is None or dna_seq == "":
         print("No DNA sequence provided.")
         return
-    
-    num_mutations = int(num_mutations) # Get number of mutations from user
+    try:
+        num_mutations = int(input("Enter the number of mutations to introduce: "))
+    except ValueError:
+        print("Invalid number entered.")
+        return
+
     if num_mutations < 1 or num_mutations > len(dna_seq):
-        print("Invalid number of mutations.") #For invalid input
+        print("Invalid number of mutations.")
         return
     dna_bases = ['A', 'T', 'C', 'G']
-dna_list = list(dna_seq)  # Convert DNA sequence to a list for mutations
-mutations = []  # mutations list
-positions = random.sample(range(len(dna_seq)), num_mutations)
-for pos in positions:
-    original_base = dna_list[pos]
-    new_base = random.choice([b for b in dna_bases if b != original_base])
-    dna_list[pos] = new_base
-    mutations.append((pos, original_base, new_base))
-    mutated_seq = ''.join(dna_list)
+    dna_list = list(dna_seq)  # Convert DNA sequence to a list for mutations
+    mutations = []  # mutations list
+    positions = random.sample(range(len(dna_seq)), num_mutations)
+    for pos in positions:
+        original_base = dna_list[pos]
+        new_base = random.choice([b for b in dna_bases if b != original_base])
+        dna_list[pos] = new_base
+        mutations.append((pos, original_base, new_base))
+        mutated_seq = ''.join(dna_list)
 
-    # הדפסת תוצאות
-    print("\nOriginal DNA sequence:")
-    print(dna_seq)
-    print("\nMutated DNA sequence:")
-    print(mutated_seq)
+        print("\nOriginal DNA sequence:")
+        print(dna_seq)
+        print("\nMutated DNA sequence:")
+        print(mutated_seq)
 
     print("\nMutations introduced:")
     for pos, orig, new in mutations:
