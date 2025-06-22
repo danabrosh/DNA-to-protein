@@ -32,12 +32,12 @@ codon_table = {
     'GGU': 'Glycine', 'GGC': 'Glycine', 'GGA': 'Glycine', 'GGG': 'Glycine'
 }
 
-
+# Function to transcribe DNA to mRNA
 def dna_to_mrna(dna_seq):
-    #Simulates transcription by building mRNA from the template strand (complement of input(dna_seq))
-    complement = {'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C'}
-    template_strand = ''.join(complement.get(base, 'N') for base in reversed(dna_seq))
-    return template_strand.replace('T', 'U')  # 🔁 צריך להחזיר את התוצאה
+    # This function takes a DNA coding strand (5'→3')
+    # and returns the mRNA sequence by replacing T with U
+    # (simulates transcription)
+    return dna_seq.replace('T', 'U')
 
 
 # Function to get DNA sequence from user
@@ -80,16 +80,17 @@ def codon_translation(dna_seq):
         print("Please enter exactly 3 nucleotides.")
         return
 
-    # Use the dna_to_mrna function
-    mRNA_codon = dna_to_mrna(dna_seq)
+    # Convert coding DNA to mRNA directly
+    mRNA_codon = dna_seq.replace('T', 'U')
     print(f"\nmRNA codon: {mRNA_codon}")
 
-    # Amino acid translation
     amino_acid = codon_table.get(mRNA_codon, "Unknown")
     print(f"{mRNA_codon} → {amino_acid}")
 
     return mRNA_codon, amino_acid
 
+
+#Reading frames function
 def reading_frames():
     dna_seq = get_dna_sequence()
     
