@@ -34,9 +34,9 @@ codon_table = {
 
 
 def dna_to_mrna(dna_seq):
-    #Convert a DNA sequence to an mRNA sequence
-    dna_to_mrna_bases = {'A': 'U', 'T': 'A', 'C': 'G', 'G': 'C'}
-    return ''.join(dna_to_mrna_bases.get(base, 'N') for base in dna_seq)
+    #Simulates transcription by building mRNA from the template strand (complement of input(dna_seq))
+    complement = {'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C'}
+    template_strand = ''.join(complement.get(base, 'N') for base in reversed(dna_seq))
 
 
 # Function to get DNA sequence from user
@@ -89,58 +89,59 @@ def codon_translation(dna_seq):
 
     return mRNA_codon, amino_acid
 
-
-#Reading frames function
 def reading_frames():
-    dna_seq = get_dna_sequence()  # Get the DNA sequence from the user
-
-    # Check if the sequence is valid
-    if dna_seq is None or dna_seq == "":
-        print("No DNA sequence provided.")
-        return
-    if len(dna_seq) < 3:
-        print("Please enter a DNA sequence with at least 3 nucleotides.")
+    dna_seq = get_dna_sequence()
+    
+    if not dna_seq or len(dna_seq) < 3:
+        print("No valid DNA sequence provided.")
         return
 
-    # Dictionaries for conversion
-    dna_complement = {'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C'}
-    dna_to_mrna_bases = {'A': 'U', 'T': 'A', 'C': 'G', 'G': 'C'}
+    # Define complement bases
+    complement = {'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C'}
 
-    # Forward and reverse strands
+    # Define strands
     strands = {
-        "Forward": dna_seq,
-        "Reverse": "".join(dna_complement.get(base, 'N') for base in reversed(dna_seq))
+        "Coding (5'→3')": dna_seq,
+        "Template (3'→5')": ''.join(complement.get(base, 'N') for base in reversed(dna_seq))
     }
 
-    # For each strand
-    for strand_name, strand_seq in strands.items():
-        # Convert DNA to mRNA
-        mrna_seq = dna_to_mrna(strand_seq)
+    # Function to transcribe DNA to mRNA
+    def transcribe(dna_strand):
+        return dna_strand.replace('T', 'U')
 
+    # Process each strand
+    for strand_name, strand_seq in strands.items():
         print(f"\n{strand_name} strand reading frames:")
 
-        # For each of the 3 reading frames
+        # Transcribe to mRNA
+        mrna_seq = transcribe(strand_seq)
+        if 'N' in mrna_seq:
+            print("Invalid mRNA sequence due to unknown bases.")
+            continue
+
         for frame in range(3):
             print(f"\nFrame {frame + 1}:")
             i = frame
-            found_orf = False
+            orf_found = False
             in_orf = False
             while i + 3 <= len(mrna_seq):
                 codon = mrna_seq[i:i+3]
                 amino_acid = codon_table.get(codon, 'X')
 
-                if codon == 'AUG':
+                if codon == 'AUG' and not in_orf:
                     in_orf = True
                     print(f"{codon} → {amino_acid}")
                 elif in_orf:
                     print(f"{codon} → {amino_acid}")
                     if amino_acid == 'STOP':
-                        found_orf = True
+                        orf_found = True
                         break
                 i += 3
 
-            if not found_orf:
-                print("No open reading frame")
+            if not in_orf:
+                print("No start codon (AUG) found.")
+            elif in_orf and not orf_found:
+                print("Start codon found, but no STOP codon — incomplete ORF.")
 
 
 #For testing motif search function
