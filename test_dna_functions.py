@@ -18,6 +18,16 @@ def test_codon_translation():
     assert codon_translation("CCC") == ("GGG", "Glycine")
     assert codon_translation("GAA") == ("CUU", "Leucine")
 
+# Test the find_motif_positions function
+from dna_functions import find_motif_positions
+
+def test_find_motif_positions():
+    seq = "ATGCATGCGTATATATAGC"
+    assert find_motif_positions(seq, "ATG") == [0, 4]
+    assert find_motif_positions(seq, "TATA") == [9, 11, 13]
+    assert find_motif_positions(seq, "AAA") == []  
+
+
 #Test the introduce_mutations function
 from dna_functions import introduce_mutations
 
@@ -37,3 +47,4 @@ def test_introduce_mutations():
         assert dna_seq[pos] == orig
         assert mutated_seq[pos] == new
         assert orig != new
+

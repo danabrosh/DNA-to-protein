@@ -1,5 +1,6 @@
-import random #imoort needed for mutation simulation
-#rna to amino acid translation dictionary
+import random #Import needed for mutation simulation
+
+#RNA to amino acid translation dictionary
 codon_table = {
     'UUU': 'Phenylalanine', 'UUC': 'Phenylalanine',
     'UUA': 'Leucine', 'UUG': 'Leucine',
@@ -31,10 +32,12 @@ codon_table = {
     'GGU': 'Glycine', 'GGC': 'Glycine', 'GGA': 'Glycine', 'GGG': 'Glycine'
 }
 
+
 def dna_to_mrna(dna_seq):
     #Convert a DNA sequence to an mRNA sequence
     dna_to_mrna_bases = {'A': 'U', 'T': 'A', 'C': 'G', 'G': 'C'}
     return ''.join(dna_to_mrna_bases.get(base, 'N') for base in dna_seq)
+
 
 # Function to get DNA sequence from user
 def get_dna_sequence():
@@ -65,6 +68,7 @@ def get_dna_sequence():
         print("Invalid choice. Please enter 1 or 2.")
         return None
 
+
 #Codon translation function
 def codon_translation(dna_seq):  
     if dna_seq is None or dna_seq == "":
@@ -75,7 +79,7 @@ def codon_translation(dna_seq):
         print("Please enter exactly 3 nucleotides.")
         return
 
-    # Use the dna_to_mrna helper function
+    # Use the dna_to_mrna function
     mRNA_codon = dna_to_mrna(dna_seq)
     print(f"\nmRNA codon: {mRNA_codon}")
 
@@ -84,6 +88,7 @@ def codon_translation(dna_seq):
     print(f"{mRNA_codon} → {amino_acid}")
 
     return mRNA_codon, amino_acid
+
 
 #Reading frames function
 def reading_frames():
@@ -138,6 +143,12 @@ def reading_frames():
                 print("No open reading frame")
 
 
+#For testing motif search function
+def find_motif_positions(dna_seq, motif):
+    #Returns a list of positions where the motif starts in the DNA sequence
+    return [i for i in range(len(dna_seq)) if dna_seq.startswith(motif, i)]
+
+
 # Motif search function
 def motif_search():
     dna_seq = get_dna_sequence()  # Get the DNA sequence from the user
@@ -179,12 +190,14 @@ def motif_search():
 
     # Search and display results from the DNA sequence
     count = dna_seq.count(motif)
-    positions = [i for i in range(len(dna_seq)) if dna_seq.startswith(motif, i)]
+    positions = find_motif_positions(dna_seq, motif)
     print(f"\nMotif '{motif}':")
     print(f"Found {count} time(s) at positions: {positions if positions else 'None'}")
 
+
 # Mutation simulation function 
-def introduce_mutations(dna_seq, num_mutations): #For testing purposes, the user can specify how many mutations to introduce
+#For testing purposes, this function introduces random mutations into a DNA sequence
+def introduce_mutations(dna_seq, num_mutations): 
     dna_bases = ['A', 'T', 'C', 'G']
     dna_list = list(dna_seq)
     mutations = []
@@ -199,6 +212,8 @@ def introduce_mutations(dna_seq, num_mutations): #For testing purposes, the user
     mutated_seq = ''.join(dna_list)
     return mutated_seq, mutations
 
+
+# Mutation simulation function- not for testing purposes, this function simulates mutations in a DNA sequence
 def mutation_simulation():
     dna_seq = get_dna_sequence()
     if not dna_seq:
