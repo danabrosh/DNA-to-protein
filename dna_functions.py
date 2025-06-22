@@ -31,6 +31,11 @@ codon_table = {
     'GGU': 'Glycine', 'GGC': 'Glycine', 'GGA': 'Glycine', 'GGG': 'Glycine'
 }
 
+def dna_to_mrna(dna_seq):
+    #Convert a DNA sequence to an mRNA sequence
+    dna_to_mrna_bases = {'A': 'U', 'T': 'A', 'C': 'G', 'G': 'C'}
+    return ''.join(dna_to_mrna_bases.get(base, 'N') for base in dna_seq)
+
 # Function to get DNA sequence from user
 def get_dna_sequence():
     print("How would you like to provide the DNA sequence?")
@@ -61,7 +66,7 @@ def get_dna_sequence():
         return None
 
 #Codon translation function
-def codon_translation(dna_seq):  # Added parameter
+def codon_translation(dna_seq):  
     if dna_seq is None or dna_seq == "":
         print("No DNA sequence provided.")
         return
@@ -70,24 +75,14 @@ def codon_translation(dna_seq):  # Added parameter
         print("Please enter exactly 3 nucleotides.")
         return
 
-    mRNA_codon = ""
-    for base in dna_seq:
-        if base == 'A':
-            mRNA_codon += 'U'
-        elif base == 'T':
-            mRNA_codon += 'A'
-        elif base == 'C':
-            mRNA_codon += 'G'
-        elif base == 'G':
-            mRNA_codon += 'C'
-        else:
-            mRNA_codon += 'N'  # Invalid base
-
+    # Use the dna_to_mrna helper function
+    mRNA_codon = dna_to_mrna(dna_seq)
     print(f"\nmRNA codon: {mRNA_codon}")
-    
+
     # Amino acid translation
     amino_acid = codon_table.get(mRNA_codon, "Unknown")
     print(f"{mRNA_codon} → {amino_acid}")
+
     return mRNA_codon, amino_acid
 
 #Reading frames function
