@@ -44,13 +44,13 @@ This project simulates how cells turn DNA into proteins through transcription an
 - Output: Frame 1: AUG → Methionine, GGC → Glycine, UUU → Phenylalanine, UAA → STOP. Frame 2: No start codon (AUG) found. Frame 3: No start               codon (AUG) found.
            Template (3'→5') strand reading frames: Frame 1: No start codon (AUG) found. Frame 2: No start codon (AUG) found. Frame 3:No                     start codon (AUG) found.
   
-   **Motif Search**
-   - Input: TATACGAATAAATTAGGGCAG, motif- TATA.
-   - Output: Motif 'TATA': Found 1 time(s) at positions: [0].
+ **Motif Search**
+- Input: TATACGAATAAATTAGGGCAG, motif- TATA.
+- Output: Motif 'TATA': Found 1 time(s) at positions: [0].
      
-   **Mutation Simulation**
-   - Input: ATGCGTACG. Number of mutations: 3.
-   - Output: Mutated DNA sequence: ATGCGAATA. Mutations introduced: Position 6: T → A,  Position 8: C → T, Position 9: G → A.
+  **Mutation Simulation**
+- Input: ATGCGTACG. Number of mutations: 3.
+- Output: Mutated DNA sequence: ATGCGAATA. Mutations introduced: Position 6: T → A,  Position 8: C → T, Position 9: G → A.
 
 ## 🗂️ Project Structure
 This project contains 4 files-
