@@ -37,6 +37,7 @@ def dna_to_mrna(dna_seq):
     #Simulates transcription by building mRNA from the template strand (complement of input(dna_seq))
     complement = {'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C'}
     template_strand = ''.join(complement.get(base, 'N') for base in reversed(dna_seq))
+    return template_strand.replace('T', 'U')  # 🔁 צריך להחזיר את התוצאה
 
 
 # Function to get DNA sequence from user
