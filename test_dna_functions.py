@@ -17,3 +17,23 @@ def test_codon_translation():
     assert codon_translation("TTT") == ("AAA", "Lysine")
     assert codon_translation("CCC") == ("GGG", "Glycine")
     assert codon_translation("GAA") == ("CUU", "Leucine")
+
+#Test the introduce_mutations function
+from dna_functions import introduce_mutations
+
+def test_introduce_mutations():
+    dna_seq = "ATGCGTAC"
+    num_mutations = 2
+    mutated_seq, mutations = introduce_mutations(dna_seq, num_mutations)
+
+    # Make sure the mutated sequence is the same length as the original
+    assert len(mutated_seq) == len(dna_seq)
+
+    # Check that we got the right number of mutations
+    assert len(mutations) == num_mutations
+
+    # Make sure each mutation actually changed a base
+    for pos, orig, new in mutations:
+        assert dna_seq[pos] == orig
+        assert mutated_seq[pos] == new
+        assert orig != new

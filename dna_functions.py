@@ -110,7 +110,7 @@ def reading_frames():
     # For each strand
     for strand_name, strand_seq in strands.items():
         # Convert DNA to mRNA
-        mrna_seq = "".join(dna_to_mrna_bases.get(base, 'N') for base in strand_seq)
+        mrna_seq = dna_to_mrna(strand_seq)
 
         print(f"\n{strand_name} strand reading frames:")
 
@@ -184,37 +184,43 @@ def motif_search():
     print(f"Found {count} time(s) at positions: {positions if positions else 'None'}")
 
 # Mutation simulation function 
-def mutation_simulation():
-    dna_seq = get_dna_sequence()  # Get DNA from user
-    if dna_seq is None or dna_seq == "":
-        print("No DNA sequence provided.")
-        return
-    try:
-        num_mutations = int(input("Enter the number of mutations to introduce: "))
-    except ValueError:
-        print("Invalid number entered.")
-        return
-
-    if num_mutations < 1 or num_mutations > len(dna_seq):
-        print("Invalid number of mutations.")
-        return
+def introduce_mutations(dna_seq, num_mutations): #For testing purposes, the user can specify how many mutations to introduce
     dna_bases = ['A', 'T', 'C', 'G']
-    dna_list = list(dna_seq)  # Convert DNA sequence to a list for mutations
-    mutations = []  # mutations list
+    dna_list = list(dna_seq)
+    mutations = []
     positions = random.sample(range(len(dna_seq)), num_mutations)
+
     for pos in positions:
         original_base = dna_list[pos]
         new_base = random.choice([b for b in dna_bases if b != original_base])
         dna_list[pos] = new_base
         mutations.append((pos, original_base, new_base))
-        mutated_seq = ''.join(dna_list)
 
-        print("\nOriginal DNA sequence:")
-        print(dna_seq)
-        print("\nMutated DNA sequence:")
-        print(mutated_seq)
+    mutated_seq = ''.join(dna_list)
+    return mutated_seq, mutations
 
+def mutation_simulation():
+    dna_seq = get_dna_sequence()
+    if not dna_seq:
+        print("No DNA sequence provided.")
+        return
+
+    try:
+        num_mutations = int(input("Enter number of mutations: "))
+    except ValueError:
+        print("Invalid number.")
+        return
+
+    if num_mutations < 1 or num_mutations > len(dna_seq):
+        print("Invalid number of mutations.")
+        return
+
+    mutated_seq, mutations = introduce_mutations(dna_seq, num_mutations)
+
+    print("\nOriginal DNA sequence:")
+    print(dna_seq)
+    print("\nMutated DNA sequence:")
+    print(mutated_seq)
     print("\nMutations introduced:")
     for pos, orig, new in mutations:
         print(f"Position {pos + 1}: {orig} → {new}")
-
