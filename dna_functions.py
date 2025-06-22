@@ -84,10 +84,11 @@ def codon_translation(dna_seq):  # Added parameter
             mRNA_codon += 'N'  # Invalid base
 
     print(f"\nmRNA codon: {mRNA_codon}")
-
+    
     # Amino acid translation
     amino_acid = codon_table.get(mRNA_codon, "Unknown")
     print(f"{mRNA_codon} → {amino_acid}")
+    return mRNA_codon, amino_acid
 
 #Reading frames function
 def reading_frames():
