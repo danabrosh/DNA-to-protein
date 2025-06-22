@@ -2,21 +2,23 @@
 from dna_functions import dna_to_mrna
 
 def test_dna_to_mrna():
-    assert dna_to_mrna("ATG") == "UAC"
-    assert dna_to_mrna("TAC") == "AUG"
-    assert dna_to_mrna("CGT") == "GCA"
-    assert dna_to_mrna("XXX") == "NNN"  # Invalid bases
+    assert dna_to_mrna("ATG") == "AUG"
+    assert dna_to_mrna("TAC") == "UAC"
+    assert dna_to_mrna("CGT") == "CGU"
+    assert dna_to_mrna("XXX") == "XXX"  # stays the same if unknown
+
 
 
 #Tests the codon_translation function with different 3-letter DNA codons.
 from dna_functions import codon_translation
 
 def test_codon_translation():
-    assert codon_translation("ATG") == ("UAC", "Tyrosine")
-    assert codon_translation("AAA") == ("UUU", "Phenylalanine")
-    assert codon_translation("TTT") == ("AAA", "Lysine")
-    assert codon_translation("CCC") == ("GGG", "Glycine")
-    assert codon_translation("GAA") == ("CUU", "Leucine")
+    assert codon_translation("ATG") == ("AUG", "Methionine")
+    assert codon_translation("TTC") == ("UUC", "Phenylalanine")
+    assert codon_translation("AAA") == ("AAA", "Lysine")
+    assert codon_translation("CCC") == ("CCC", "Proline")
+    assert codon_translation("GAA") == ("GAA", "Glutamic acid")
+
 
 # Test the find_motif_positions function
 from dna_functions import find_motif_positions
