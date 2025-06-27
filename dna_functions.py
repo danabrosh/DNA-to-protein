@@ -1,4 +1,5 @@
-import random #Import needed for mutation simulation
+#Import needed for mutation simulation
+import random 
 
 #RNA to amino acid translation dictionary
 codon_table = {
@@ -34,11 +35,10 @@ codon_table = {
 
 # Function to transcribe DNA to mRNA
 def dna_to_mrna(dna_seq):
-    # This function takes a DNA coding strand (5'→3')
+    # This function stimulates transcription-
+    #  takes a DNA coding strand (5'→3')
     # and returns the mRNA sequence by replacing T with U
-    # (simulates transcription)
     return dna_seq.replace('T', 'U')
-
 
 # Function to get DNA sequence from user
 def get_dna_sequence():
@@ -74,7 +74,8 @@ def get_dna_sequence():
         return None
 
 
-#Codon translation function
+#DNA codon translation function
+#Translate a DNA codon to mRNA and amino acid
 def codon_translation(dna_seq):  
     if dna_seq is None or dna_seq == "":
         print("No DNA sequence provided.")
@@ -95,6 +96,7 @@ def codon_translation(dna_seq):
 
 
 #Reading frames function
+#Finds and prints valid protein-coding regions (start to stop codon) in all reading frames of both DNA strands
 def reading_frames():
     dna_seq = get_dna_sequence()
     
@@ -151,13 +153,14 @@ def reading_frames():
                 print("No valid ORF (start+stop codons) found in this frame.")
 
 
+#Functions for motif search
+#Motf search function finds motifs in the DNA sequence
 #For testing motif search function
 def find_motif_positions(dna_seq, motif):
     #Returns a list of positions where the motif starts in the DNA sequence
     return [i for i in range(len(dna_seq)) if dna_seq.startswith(motif, i)]
 
-
-# Motif search function
+# Motif search function- main function
 def motif_search():
     dna_seq = get_dna_sequence()  # Get the DNA sequence from the user
 
@@ -219,7 +222,6 @@ def introduce_mutations(dna_seq, num_mutations):
 
     mutated_seq = ''.join(dna_list)
     return mutated_seq, mutations
-
 
 # Mutation simulation function- not for testing purposes, this function simulates mutations in a DNA sequence
 def mutation_simulation():
