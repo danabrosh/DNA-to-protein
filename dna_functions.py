@@ -49,6 +49,10 @@ def get_dna_sequence():
 
     if choice == '1':
         seq = input("Enter the DNA sequence: ").strip().upper()
+        #Only allow valid DNA bases- error if invalid bases
+        if not all(base in "ATCG" for base in seq):
+            print("Invalid DNA sequence. Use only A, T, C, G.")
+            return None
         return seq
 
     elif choice == '2':
