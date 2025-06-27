@@ -107,16 +107,15 @@ def reading_frames():
         "Template (3'→5')": ''.join(complement.get(base, 'N') for base in reversed(dna_seq))
     }
 
-    # Function to transcribe DNA to mRNA
-    def transcribe(dna_strand):
-        return dna_strand.replace('T', 'U')
-
-    # Process each strand
     for strand_name, strand_seq in strands.items():
         print(f"\n{strand_name} strand reading frames:")
 
-        # Transcribe to mRNA
-        mrna_seq = transcribe(strand_seq)
+        if strand_name == "Coding (5'→3')":
+            mrna_seq = strand_seq.replace('T', 'U')
+        else:
+            rna_complement = {'A': 'U', 'T': 'A', 'C': 'G', 'G': 'C'}
+            mrna_seq = ''.join(rna_complement.get(base, 'N') for base in strand_seq)
+
         if 'N' in mrna_seq:
             print("Invalid mRNA sequence due to unknown bases.")
             continue
@@ -124,26 +123,29 @@ def reading_frames():
         for frame in range(3):
             print(f"\nFrame {frame + 1}:")
             i = frame
-            orf_found = False
-            in_orf = False
+            orf_codons = []
+            found_orf = False
+
             while i + 3 <= len(mrna_seq):
                 codon = mrna_seq[i:i+3]
                 amino_acid = codon_table.get(codon, 'X')
 
-                if codon == 'AUG' and not in_orf:
-                    in_orf = True
-                    print(f"{codon} → {amino_acid}")
-                elif in_orf:
-                    print(f"{codon} → {amino_acid}")
+                if codon == 'AUG' and not orf_codons:
+                    orf_codons.append((codon, amino_acid))
+                elif orf_codons:
+                    orf_codons.append((codon, amino_acid))
                     if amino_acid == 'STOP':
-                        orf_found = True
+                        found_orf = True
                         break
                 i += 3
 
-            if not in_orf:
-                print("No start codon (AUG) found.")
-            elif in_orf and not orf_found:
-                print("Start codon found, but no STOP codon — incomplete ORF.")
+            if found_orf:
+                print("→ ORF found:")
+                for codon, aa in orf_codons:
+                    print(f"{codon} → {aa}")
+            else:
+                print("No valid ORF (start+stop codons) found in this frame.")
+
 
 
 #For testing motif search function
