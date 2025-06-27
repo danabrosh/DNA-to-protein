@@ -147,7 +147,6 @@ def reading_frames():
                 print("No valid ORF (start+stop codons) found in this frame.")
 
 
-
 #For testing motif search function
 def find_motif_positions(dna_seq, motif):
     #Returns a list of positions where the motif starts in the DNA sequence
