@@ -57,7 +57,7 @@ This project contains 4 files-
 1. **menu.py** – Contains the main function, which displays a menu. The user selects which function from DNA functions to run and provides a DNA sequence.
 2. **dna_functions.py**– Contains the main biological functions and helper functions for tasks like transcription, translation, motif search,                            and mutation simulation.
 3. **test_dna_functions.py**– Includes basic tests for the main functions to make sure they return correct results using sample DNA sequences.
-4. **requirements.txt** – Currently empty, as the project doesn't use external libraries beyond Python’s built-in modules
+4. **requirements.txt** – Currently empty, as the project doesn't use external libraries beyond Python’s built-in modules.
 
 ## ⚙️ How to Use
   * This project is written in Python 3.
