@@ -9,12 +9,10 @@ codon_table = {
     'AUU': 'Isoleucine', 'AUC': 'Isoleucine', 'AUA': 'Isoleucine',
     'AUG': 'Methionine',
     'GUU': 'Valine', 'GUC': 'Valine', 'GUA': 'Valine', 'GUG': 'Valine',
-    
     'UCU': 'Serine', 'UCC': 'Serine', 'UCA': 'Serine', 'UCG': 'Serine',
     'CCU': 'Proline', 'CCC': 'Proline', 'CCA': 'Proline', 'CCG': 'Proline',
     'ACU': 'Threonine', 'ACC': 'Threonine', 'ACA': 'Threonine', 'ACG': 'Threonine',
     'GCU': 'Alanine', 'GCC': 'Alanine', 'GCA': 'Alanine', 'GCG': 'Alanine',
-    
     'UAU': 'Tyrosine', 'UAC': 'Tyrosine',
     'UAA': 'STOP', 'UAG': 'STOP',
     'CAU': 'Histidine', 'CAC': 'Histidine',
@@ -23,7 +21,6 @@ codon_table = {
     'AAA': 'Lysine', 'AAG': 'Lysine',
     'GAU': 'Aspartic acid', 'GAC': 'Aspartic acid',
     'GAA': 'Glutamic acid', 'GAG': 'Glutamic acid',
-    
     'UGU': 'Cysteine', 'UGC': 'Cysteine',
     'UGA': 'STOP',
     'UGG': 'Tryptophan',
@@ -33,12 +30,11 @@ codon_table = {
     'GGU': 'Glycine', 'GGC': 'Glycine', 'GGA': 'Glycine', 'GGG': 'Glycine'
 }
 
-# Function to transcribe DNA to mRNA
+# Function to transcribe DNA to mRNA- stimulates transcription
 def dna_to_mrna(dna_seq):
-    # This function stimulates transcription-
-    #  takes a DNA coding strand (5'→3')
-    # and returns the mRNA sequence by replacing T with U
-    return dna_seq.replace('T', 'U')
+    rna_complement = {'A': 'U', 'T': 'A', 'C': 'G', 'G': 'C'}
+    mrna = ''.join(rna_complement.get(base, 'N') for base in reversed(dna_seq))
+    return mrna
 
 # Function to get DNA sequence from user
 def get_dna_sequence():
@@ -77,16 +73,12 @@ def get_dna_sequence():
 #DNA codon translation function
 #Translate a DNA codon to mRNA and amino acid
 def codon_translation(dna_seq):  
-    if dna_seq is None or dna_seq == "":
-        print("No DNA sequence provided.")
-        return
-
     if len(dna_seq) != 3:
         print("Please enter exactly 3 nucleotides.")
         return
 
-    # Convert coding DNA to mRNA directly
-    mRNA_codon = dna_seq.replace('T', 'U')
+    # Transcribe from template strand to mRNA codon
+    mRNA_codon = dna_to_mrna(dna_seq)
     print(f"\nmRNA codon: {mRNA_codon}")
 
     amino_acid = codon_table.get(mRNA_codon, "Unknown")
@@ -95,82 +87,57 @@ def codon_translation(dna_seq):
     return mRNA_codon, amino_acid
 
 
-#Reading frames function
-#Finds and prints valid protein-coding regions (start to stop codon) in all reading frames of both DNA strands
+# Reading frames function: Finds ORFs in mRNA transcribed from DNA template strand
 def reading_frames():
     dna_seq = get_dna_sequence()
-    
+
     if not dna_seq or len(dna_seq) < 3:
         print("No valid DNA sequence provided.")
         return
 
-    # Define complement bases
-    complement = {'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C'}
+    mrna_seq = dna_to_mrna(dna_seq)  # Transcribe from template to mRNA
+    print("\nmRNA sequence (5'→3'):", mrna_seq)
 
-    # Define strands
-    strands = {
-        "Coding (5'→3')": dna_seq,
-        "Template (3'→5')": ''.join(complement.get(base, 'N') for base in reversed(dna_seq))
-    }
+    for frame in range(3):
+        print(f"\nFrame {frame + 1}:")
+        i = frame
+        orf_codons = []
+        found_orf = False
 
-    for strand_name, strand_seq in strands.items():
-        print(f"\n{strand_name} strand reading frames:")
+        while i + 3 <= len(mrna_seq):
+            codon = mrna_seq[i:i+3]
+            amino_acid = codon_table.get(codon, 'X')
 
-        if strand_name == "Coding (5'→3')":
-            mrna_seq = strand_seq.replace('T', 'U')
+            if codon == 'AUG' and not orf_codons:
+                orf_codons.append((codon, amino_acid))
+            elif orf_codons:
+                orf_codons.append((codon, amino_acid))
+                if amino_acid == 'STOP':
+                    found_orf = True
+                    break
+            i += 3
+
+        if found_orf:
+            print("→ ORF found:")
+            for codon, aa in orf_codons:
+                print(f"{codon} → {aa}")
         else:
-            rna_complement = {'A': 'U', 'T': 'A', 'C': 'G', 'G': 'C'}
-            mrna_seq = ''.join(rna_complement.get(base, 'N') for base in strand_seq)
-
-        if 'N' in mrna_seq:
-            print("Invalid mRNA sequence due to unknown bases.")
-            continue
-
-        for frame in range(3):
-            print(f"\nFrame {frame + 1}:")
-            i = frame
-            orf_codons = []
-            found_orf = False
-
-            while i + 3 <= len(mrna_seq):
-                codon = mrna_seq[i:i+3]
-                amino_acid = codon_table.get(codon, 'X')
-
-                if codon == 'AUG' and not orf_codons:
-                    orf_codons.append((codon, amino_acid))
-                elif orf_codons:
-                    orf_codons.append((codon, amino_acid))
-                    if amino_acid == 'STOP':
-                        found_orf = True
-                        break
-                i += 3
-
-            if found_orf:
-                print("→ ORF found:")
-                for codon, aa in orf_codons:
-                    print(f"{codon} → {aa}")
-            else:
-                print("No valid ORF (start+stop codons) found in this frame.")
+            print("No valid ORF (start+stop codons) found in this frame.")
 
 
 #Functions for motif search
-#Motf search function finds motifs in the DNA sequence
-#For testing motif search function
+#Motןf search function finds motifs in the DNA sequence
 def find_motif_positions(dna_seq, motif):
-    #Returns a list of positions where the motif starts in the DNA sequence
     return [i for i in range(len(dna_seq)) if dna_seq.startswith(motif, i)]
 
-# Motif search function- main function
 def motif_search():
-    dna_seq = get_dna_sequence()  # Get the DNA sequence from the user
-
-    if dna_seq is None or dna_seq == "":
+    dna_seq = get_dna_sequence()
+    if not dna_seq:
         print("No DNA sequence provided.")
         return
 
-    print("\nMotif Search:")  # The user can search for a known motif or enter a custom one
-    print("1. Search for a known motif (e.g., TATA, CG)")
-    print("2. Enter your own custom motif")
+    print("\nMotif Search:")
+    print("1. Choose from known motifs\n2. Enter custom motif")
     choice = input("Enter 1 or 2: ").strip()
 
     motif_lst = {
@@ -178,36 +145,31 @@ def motif_search():
         "2": ("CG", "CpG site"),
         "3": ("AATAAA", "Polyadenylation signal"),
         "4": ("CAG", "Repeat motif"),
-        "5": ("TTAGGG", "Telomere repeat")}
+        "5": ("TTAGGG", "Telomere repeat")
+    }
 
-    if choice == '1':  # Choose from the motif list
-        print("\nSelect one of the following motifs to search for:")
-        for num, (motif, description) in motif_lst.items():
-            print(f"{num}. {motif} ({description})")
-        selected = input("Enter the number of the motif you want to search for: ").strip()
-        if selected in motif_lst:
-            motif = motif_lst[selected][0]
-        else:
+    if choice == '1':
+        for num, (motif, desc) in motif_lst.items():
+            print(f"{num}. {motif} ({desc})")
+        selected = motif_lst.get(input("Enter motif number: ").strip())
+        if not selected:
             print("Invalid selection.")
             return
-    elif choice == '2':  # Custom motif
-        motif = input("Enter the motif you want to search for: ").strip().upper()
-        if motif == "":
+        motif = selected[0]
+    elif choice == '2':
+        motif = input("Enter custom motif: ").strip().upper()
+        if not motif:
             print("No motif entered.")
             return
     else:
         print("Invalid choice.")
         return
 
-    # Search and display results from the DNA sequence
-    count = dna_seq.count(motif)
     positions = find_motif_positions(dna_seq, motif)
-    print(f"\nMotif '{motif}':")
-    print(f"Found {count} time(s) at positions: {positions if positions else 'None'}")
-
+    print(f"\nMotif '{motif}': Found {len(positions)} time(s) at positions: {positions or 'None'}")
 
 # Mutation simulation function 
-#For testing purposes, this function introduces random mutations into a DNA sequence
+# This function introduces random mutations into a DNA sequence
 def introduce_mutations(dna_seq, num_mutations): 
     dna_bases = ['A', 'T', 'C', 'G']
     dna_list = list(dna_seq)
@@ -223,7 +185,7 @@ def introduce_mutations(dna_seq, num_mutations):
     mutated_seq = ''.join(dna_list)
     return mutated_seq, mutations
 
-# Mutation simulation function- not for testing purposes, this function simulates mutations in a DNA sequence
+# Mutation simulation function - this function simulates mutations in a DNA sequence
 def mutation_simulation():
     dna_seq = get_dna_sequence()
     if not dna_seq:
@@ -236,16 +198,14 @@ def mutation_simulation():
         print("Invalid number.")
         return
 
-    if num_mutations < 1 or num_mutations > len(dna_seq):
+    if not (1 <= num_mutations <= len(dna_seq)):
         print("Invalid number of mutations.")
         return
 
     mutated_seq, mutations = introduce_mutations(dna_seq, num_mutations)
 
-    print("\nOriginal DNA sequence:")
-    print(dna_seq)
-    print("\nMutated DNA sequence:")
-    print(mutated_seq)
+    print(f"\nOriginal DNA sequence:\n{dna_seq}")
+    print(f"\nMutated DNA sequence:\n{mutated_seq}")
     print("\nMutations introduced:")
     for pos, orig, new in mutations:
         print(f"Position {pos + 1}: {orig} → {new}")
