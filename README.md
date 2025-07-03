@@ -12,15 +12,15 @@ To use this information, cells perform two key steps:
 This project simulates how cells turn DNA into proteins through transcription and translation. It includes four main parts:
 
 1. **Codon Translation**  
-   Converts a 3-letter DNA codon (like ATG) to its mRNA complement (UAC) and then translates it into the corresponding amino acid (Tyrosine).
+   Converts a 3-letter DNA codonto its mRNA complement and then translates it into the corresponding amino acid.
 2. **Reading Frames and ORFs**  
-   Analyzes a full DNA sequence, prints all three reading frames, finds valid open reading frames (from `AUG` to a stop codon), and translates them. Repeats for the complementary strand.
+   Analyzes a full DNA sequence, prints all three reading frames, finds valid open reading frames (from `AUG` to a stop codon), and translates them. 
 3. **Motif Search**
    Searches the sequence for known or user-defined motifs (for example,TATA, CG) and reports how many times they appear and their positions.
 4. **Mutation Simulation**  
    Introduces random point mutations and shows the mutated sequence with differences- can serve as a biological tool for exploring gene variation.
 ## Input:
- The user is prompted to provide the DNA sequence either by entering it manually or by loading it from a FASTA file through an interactive menu.
+ The user is prompted to provide the DNA sequence (template strand) either by entering it manually or by loading it from a FASTA file through an interactive menu.
  
  • The user will be asked to choose which function to run (Codon Translation, Reading Frames, Motif Search, or Mutation Simulation).  
 - Depending on the part:
@@ -36,13 +36,13 @@ This project simulates how cells turn DNA into proteins through transcription an
 
  ## 🧪 Running Examples
  **Codon Translation** 
- - Input: ATG
- - Output: mRNA codon: UAC, UAC → Tyrosine
+ - Input: ACG
+ - Output: mRNA codon: CGU, CGU → Arginine
    
 **Reading Frames and ORFs**
-- Input: ATGGGCTTTTAA
-- Output: Frame 1: AUG → Methionine, GGC → Glycine, UUU → Phenylalanine, UAA → STOP. Frame 2: No start codon (AUG) found. Frame 3: No start               codon (AUG) found.
-           Template (3'→5') strand reading frames: Frame 1: No start codon (AUG) found. Frame 2: No start codon (AUG) found. Frame 3:No                     start codon (AUG) found.
+- Input: TTACAT
+- Output: mRNA sequence (5'→3'): AUGUAA.
+  Frame 1: → ORF found: AUG → Methionine, UAA → STOP Frame 2: No valid ORF (start+stop codons) found in this frame. Frame 3: No valid ORF          (start+stop codons) found in this frame.
   
  **Motif Search**
 - Input: TATACGAATAAATTAGGGCAG, motif- TATA.
