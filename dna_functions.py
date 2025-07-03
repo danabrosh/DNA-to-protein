@@ -91,7 +91,7 @@ def codon_translation(dna_seq):
 def reading_frames():
     dna_seq = get_dna_sequence()
 
-    if not dna_seq or len(dna_seq) < 3:
+    if not dna_seq or len(dna_seq) < 6: #Open reading frames require at least 6 bases
         print("No valid DNA sequence provided.")
         return
 
