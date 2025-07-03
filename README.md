@@ -20,7 +20,7 @@ This project simulates how cells turn DNA into proteins through transcription an
 4. **Mutation Simulation**  
    Introduces random point mutations and shows the mutated sequence with differences- can serve as a biological tool for exploring gene variation.
 ## Input:
- The user is prompted to provide the DNA sequence either by entering it manually or by loading it from a FASTA file through an interactive menu.
+ The user is prompted to provide the DNA sequence (template strand) either by entering it manually or by loading it from a FASTA file through an interactive menu.
  
  • The user will be asked to choose which function to run (Codon Translation, Reading Frames, Motif Search, or Mutation Simulation).  
 - Depending on the part:
